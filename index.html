@@ -1,147 +1,144 @@
 <!DOCTYPE html>
 <html lang="cs">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Pracujeme bez plagiátorství, bez umělé inteligence, s garancí kvality. Získejte kvalitní podporu při psaní vaší diplomové práce od zkušených odborníků ještě dnes.">
-    <meta name="keywords" content="diplomová práce">
-    <meta name="robots" content="index, follow">
-    <title>DiplomováPomoc</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Pracujeme bez plagiátorství, bez umělé inteligence, s garancí kvality. Získejte kvalitní podporu při psaní vaší diplomové práce od zkušených odborníků ještě dnes." />
+  <meta name="keywords" content="diplomová práce" />
+  <meta name="robots" content="index, follow" />
+  <title>DiplomováPomoc</title>
 
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: linear-gradient(to bottom, #1a2a44, #f4f4f4);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    header {
+      width: 100%;
+      background-color: rgba(255, 255, 255, 0.95);
+      padding: 15px 30px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      font-size: 1.1rem;
+      font-weight: bold;
+      color: #1a2a44;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      display: flex;
+      justify-content: flex-start;
+    }
+
+    .container {
+      text-align: center;
+      padding: 60px 20px;
+      max-width: 800px;
+    }
+
+    h1 {
+      font-size: 3rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      color: #fff;
+    }
+
+    p {
+      font-size: 1.5rem;
+      margin-bottom: 2rem;
+      color: #fff;
+    }
+
+    .cta-button {
+      display: inline-block;
+      padding: 1.2rem 2.5rem;
+      background: linear-gradient(135deg, #6a11cb, #2575fc);
+      color: #fff;
+      text-decoration: none;
+      border-radius: 10px;
+      font-size: 1.3rem;
+      font-weight: bold;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    .cta-button:hover {
+      transform: scale(1.05);
+      background: linear-gradient(135deg, #7f3eff, #3b9bff);
+      box-shadow: 0 6px 20px rgba(123, 97, 255, 0.5);
+    }
+
+    @media (max-width: 768px) {
+      h1 {
+        font-size: 2rem;
+      }
+      p {
+        font-size: 1.2rem;
+      }
+      .cta-button {
+        font-size: 1rem;
+        padding: 0.8rem 1.5rem;
+      }
+    }
+  </style>
+
+  <script type="text/javascript">
+    var gk_isXlsx = false;
+    var gk_xlsxFileLookup = {};
+    var gk_fileData = {};
+
+    function filledCell(cell) {
+      return cell !== "" && cell != null;
+    }
+
+    function loadFileData(filename) {
+      if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
+        try {
+          var workbook = XLSX.read(gk_fileData[filename], { type: "base64" });
+          var firstSheetName = workbook.SheetNames[0];
+          var worksheet = workbook.Sheets[firstSheetName];
+
+          var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: "" });
+          var filteredData = jsonData.filter(row => row.some(filledCell));
+          var headerRowIndex = filteredData.findIndex((row, index) =>
+            row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
+          );
+
+          if (headerRowIndex === -1 || headerRowIndex > 25) {
+            headerRowIndex = 0;
+          }
+
+          var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex));
+          csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
+          return csv;
+        } catch (e) {
+          console.error(e);
+          return "";
         }
-
-        body {
-            font-family: Arial, sans-serif;
-            color: #fff;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            min-height: 100vh;
-            overflow: hidden;
-            position: relative;
-            background: radial-gradient(ellipse at bottom, #0d1b2a 0%, #000 100%);
-        }
-
-        .stars {
-            width: 100%;
-            height: 100%;
-            background: transparent url('https://raw.githubusercontent.com/VincentGarreau/particles.js/master/demo/media/starfield.png') repeat;
-            animation: moveStars 120s linear infinite;
-            position: absolute;
-            top: 0;
-            left: 0;
-            z-index: 0;
-        }
-
-        @keyframes moveStars {
-            from { background-position: 0 0; }
-            to { background-position: -10000px 5000px; }
-        }
-
-        .container {
-            text-align: center;
-            padding: 20px;
-            position: relative;
-            z-index: 1;
-        }
-
-        h1 {
-            font-size: 3rem;
-            font-weight: 700;
-            margin-bottom: 1rem;
-        }
-
-        p {
-            font-size: 1.5rem;
-            margin-bottom: 2rem;
-        }
-
-        .cta-button {
-            display: inline-block;
-            padding: 1.2rem 2.5rem;
-            background: linear-gradient(135deg, #6a11cb, #2575fc);
-            color: #fff;
-            text-decoration: none;
-            border-radius: 10px;
-            font-size: 1.3rem;
-            font-weight: bold;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-        }
-
-        .cta-button:hover {
-            transform: scale(1.05);
-            background: linear-gradient(135deg, #7f3eff, #3b9bff);
-            box-shadow: 0 6px 20px rgba(123, 97, 255, 0.5);
-        }
-
-        @media (max-width: 768px) {
-            h1 {
-                font-size: 2rem;
-            }
-            p {
-                font-size: 1.2rem;
-            }
-            .cta-button {
-                font-size: 1rem;
-                padding: 0.8rem 1.5rem;
-            }
-        }
-    </style>
-
-    <!-- JavaScript XLSX -->
-    <script type="text/javascript">
-        var gk_isXlsx = false;
-        var gk_xlsxFileLookup = {};
-        var gk_fileData = {};
-
-        function filledCell(cell) {
-            return cell !== '' && cell != null;
-        }
-
-        function loadFileData(filename) {
-            if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
-                try {
-                    var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
-                    var firstSheetName = workbook.SheetNames[0];
-                    var worksheet = workbook.Sheets[firstSheetName];
-
-                    var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
-                    var filteredData = jsonData.filter(row => row.some(filledCell));
-                    var headerRowIndex = filteredData.findIndex((row, index) =>
-                        row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
-                    );
-
-                    if (headerRowIndex === -1 || headerRowIndex > 25) {
-                        headerRowIndex = 0;
-                    }
-
-                    var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex));
-                    csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
-                    return csv;
-                } catch (e) {
-                    console.error(e);
-                    return "";
-                }
-            }
-            return gk_fileData[filename] || "";
-        }
-    </script>
+      }
+      return gk_fileData[filename] || "";
+    }
+  </script>
 </head>
 
 <body>
-    <div class="stars"></div>
+  <header>
+    DiplomovaPomoc.com 18 ihbanjv
+  </header>
 
-    <div class="container">
-        <h1>Pracujeme bez plagiátorství, bez umělé inteligence, s garancí kvality</h1>
-        <p>Získejte kvalitní podporu při psaní vaší diplomové práce od zkušených odborníků ještě dnes</p>
-        <a href="https://www.diplomovapomoc.com/" class="cta-button">Zjistit více</a>
-    </div>
+  <div class="container">
+    <h1>Pracujeme bez plagiátorství, bez umělé inteligence, s garancí kvality</h1>
+    <p>Získejte kvalitní podporu při psaní vaší diplomové práce od zkušených odborníků ještě dnes</p>
+    <a href="https://www.diplomovapomoc.com/" class="cta-button">Zjistit více</a>
+  </div>
 </body>
 </html>
